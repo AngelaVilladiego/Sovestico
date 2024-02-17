@@ -16,7 +16,7 @@ function OverviewCard({ stock, onClick }) {
   return (
     <div
       onClick={onClick}
-      className="overview-card rounded-md py-8 px-8 hover:cursor-pointer hover:bg-slate-50"
+      className="overview-card rounded-md py-8 px-8 hover:cursor-pointer w-full hover:bg-slate-50"
     >
       <p className="text-2xl font-semibold pb-4">
         {stock.name} ({stock.symbol})

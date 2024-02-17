@@ -6,7 +6,7 @@ import {
 
 function Navbar() {
   return (
-    <div className="w-full flex items-center justify-between py-6 px-8 bg-transparent">
+    <div className="w-full flex items-center justify-between py-6 px-8 bg-white shadow-md z-10">
       <div className="grow flex justify-start items-center">
         <a href="/" className="font-brand text-3xl font-medium mr-auto">
           Sovestico
