@@ -28,21 +28,31 @@ function SearchResults() {
   };
 
   return (
-    <div className="results-container">
-      <div className="stock-results grow flex flex-col justify-center items-center w-9/12 px-40 py-40 bg-white">
-        <OverviewCard
-          stock={dummyStock}
-          onClick={() => {
-            console.log("clicked 1");
-          }}
-        />
-        <OverviewCard
-          stock={dummyStock2}
-          onClick={() => {
-            console.log("clicked 2");
-          }}
-        />
-      </div>
+    <div className="flex flex-col justify-center items-center px-40 py-40 overflow-y-auto">
+      <OverviewCard
+        stock={dummyStock}
+        onClick={() => {
+          console.log("clicked 1");
+        }}
+      />
+      <OverviewCard
+        stock={dummyStock2}
+        onClick={() => {
+          console.log("clicked 2");
+        }}
+      />
+      <OverviewCard
+        stock={dummyStock}
+        onClick={() => {
+          console.log("clicked 1");
+        }}
+      />
+      <OverviewCard
+        stock={dummyStock2}
+        onClick={() => {
+          console.log("clicked 2");
+        }}
+      />
     </div>
   );
 }
