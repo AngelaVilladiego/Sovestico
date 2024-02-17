@@ -1,6 +1,6 @@
 function Landing() {
   return (
-    <div className="grow px-24 ">
+    <div className="grow px-24">
       <div className="w-1/2 mt-40">
         <p className="font-brand weight-bold text-6xl">
           Put your money where your <i>heart</i> is.

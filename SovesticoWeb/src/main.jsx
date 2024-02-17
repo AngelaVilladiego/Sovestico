@@ -9,11 +9,12 @@ import {
 import "./index.css";
 import Root from "./routes/root";
 import Landing from "./routes/landing";
+import SearchResults from "./routes/search-results";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Root />}>
-      <Route index element={<Landing />} />
+      <Route index element={<SearchResults />} />
     </Route>
   )
 );
