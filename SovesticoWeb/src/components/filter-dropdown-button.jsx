@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AdjustmentsHorizontalIcon,
   PlusIcon,
@@ -15,15 +15,28 @@ function FilterDropdownButton({ principles, onAddPrinciple }) {
     onAddPrinciple(principle);
   };
 
+  useEffect(() => {
+    console.log("++++ isExpanded changed, ", isExpanded);
+  }, [isExpanded]);
+
+  useEffect(() => {
+    console.log("RELOAD");
+  }, []);
+
+  const handleClickOutside = () => {
+    console.log("handling and ", isExpanded);
+    setIsExpanded((prev) => {
+      if (prev) {
+        console.log("setting to false");
+        return false;
+      } else {
+        console.log("false alrady");
+      }
+    });
+  };
+
   return (
-    <OutsideAlerter
-      handleClickOutside={() => {
-        console.log("handling");
-        if (isExpanded) {
-          setIsExpanded(false);
-        }
-      }}
-    >
+    <OutsideAlerter handleClickOutside={handleClickOutside}>
       <div className="relative filter-dropdown-parent">
         <button
           onClick={() => {
@@ -33,14 +46,13 @@ function FilterDropdownButton({ principles, onAddPrinciple }) {
         >
           <AdjustmentsHorizontalIcon className="w-7 aspect-auto self-star" />
         </button>
-        {isExpanded ? (
+        {isExpanded && (
           <div className="absolute z-40 left-1/2 -translate-x-1/2 bg-white">
             <ul className="text-sm border-slate-100 border-[1px] rounded-lg overflow-clip ">
               {principles.map((principle) => (
                 <li
                   key={principle}
                   onClick={() => handleClickFilter(principle)}
-                  onBlur={() => setIsExpanded(false)}
                   className="flex justify-between px-5 py-2 border-b-[1px] border-t-[1px] border-gray-200 group hover:cursor-pointer hover:bg-slate-100"
                 >
                   <span>{principle}</span>
@@ -49,7 +61,7 @@ function FilterDropdownButton({ principles, onAddPrinciple }) {
               ))}
             </ul>
           </div>
-        ) : null}
+        )}
       </div>
     </OutsideAlerter>
   );

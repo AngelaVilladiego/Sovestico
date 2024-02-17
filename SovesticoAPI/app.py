@@ -22,6 +22,8 @@ client = MongoClient(
     f'mongodb+srv://{mongo_user}:{mongo_pwd}@sovestico.lngt1xe.mongodb.net/?retryWrites=true&w=majority')
 db = client.main
 
+
+
 @app.route("/")
 def hello_world():
     return "<p>Hello, World!</p>"
