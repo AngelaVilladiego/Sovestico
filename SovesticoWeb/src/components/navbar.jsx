@@ -6,14 +6,14 @@ import {
 
 function Navbar() {
   return (
-    <div className="w-full flex align-center justify-between py-6 px-8 bg-transparent">
-      <div className="grow flex justify-start align-center">
+    <div className="w-full flex items-center justify-between py-6 px-8 bg-transparent">
+      <div className="grow flex justify-start items-center">
         <a href="/" className="font-brand text-3xl font-medium mr-auto">
           Sovestico
         </a>
       </div>
       <div className="w-6/12 relative text-gray-600">
-        <div className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-full text-sm focus:outline-none">
+        <div className="bg-white h-10 px-5 pr-16 rounded-full text-sm focus:outline-none">
           <input
             className="w-full h-full focus:outline-none font-body"
             type="search"
@@ -29,7 +29,7 @@ function Navbar() {
           </button>
         </div>
       </div>
-      <div className=" grow flex justify-end align-center">
+      <div className=" grow flex justify-end items-center">
         <button>
           <UserCircleIcon className="h-10 aspect-square text-neutral-900" />
         </button>

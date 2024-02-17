@@ -1,0 +1,8 @@
+.overview-card {
+    width: min(100%, 600px);
+    position: relative;
+}
+
+.overview-card:not(:last-of-type) {
+    @apply border-slate-100 border-b-2
+}

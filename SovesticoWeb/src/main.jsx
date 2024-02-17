@@ -9,7 +9,7 @@ import {
 import "./index.css";
 import Root from "./routes/root";
 import Landing from "./routes/landing";
-import SearchResults from "./routes/search-results";
+import SearchResults from "./routes/search-results/search-results";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
