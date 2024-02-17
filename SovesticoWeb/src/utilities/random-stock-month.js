@@ -701,7 +701,7 @@ var dummyData = {
   },
 };
 
-export default function getData() {
+export function getData() {
   let data = [];
   let count = 31;
   Object.entries(dummyData).forEach(([key, value]) => {
@@ -710,7 +710,17 @@ export default function getData() {
     }
     count -= 1;
   });
+  return data;
+}
 
-  console.log(data);
+export function getData2() {
+  let data = [];
+  let count = 62;
+  Object.entries(dummyData).forEach(([key, value]) => {
+    if (count > 0 && count < 32) {
+      data.push({ date: key, close: value["4. close"] });
+    }
+    count -= 1;
+  });
   return data;
 }

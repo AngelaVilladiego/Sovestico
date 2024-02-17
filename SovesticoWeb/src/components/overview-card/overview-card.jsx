@@ -9,31 +9,41 @@ import {
   AreaChart,
   Area,
 } from "recharts";
-import getData from "../../utilities/random-stock-month";
+
 import "./overview-card.css";
 
-function OverviewCard() {
-  const dummyData = getData();
-
+function OverviewCard({ stock, onClick }) {
   return (
-    <div className="overview-card rounded-md py-10 px-8 hover:cursor-pointer hover:bg-slate-50">
-      <p className="text-3xl font-semibold pb-6">Nvidia (NVDA)</p>
+    <div
+      onClick={onClick}
+      className="overview-card rounded-md py-8 px-8 hover:cursor-pointer hover:bg-slate-50"
+    >
+      <p className="text-2xl font-semibold pb-4">
+        {stock.name} ({stock.symbol})
+      </p>
       <div className="grid grid-cols-3">
         <div>
-          <p className="font-medium text-2xl pb-2">ESG 90</p>
-          <div className="flex text-emerald-700  text-lg">
+          <p className="font-medium text-xl pb-2">ESG {stock.esg}</p>
+          <div className="flex text-emerald-700  text-med">
             <ChevronUpIcon className="h-6 w-6 mr-3 self-center" />
-            <span className="font-medium">Sustainability</span>
+            <span>{stock.strongestPrinciple}</span>
           </div>
-          <div className="flex text-red-700 text-lg">
+          <div className="flex text-red-700 text-md">
             <ChevronDownIcon className="h-6 w-6 mr-3 self-center" />
-            <span>Governance</span>
+            <span>{stock.weakestPrinciple}</span>
           </div>
         </div>
 
         <div className="">
-          <p className="text-2xl font-medium">$66.38</p>
-          <p className="text-emerald-700 text-lg">+114.06%</p>
+          <p className="text-xl font-medium">${stock.price}</p>
+          <p
+            className={`${
+              stock.change > 0 ? "text-emerald-700" : "text-red-700"
+            } text-md`}
+          >
+            {stock.change > 0 ? "+" : ""}
+            {stock.change}%
+          </p>
         </div>
 
         <div className="place-self-stretch justify-self-stretch">
@@ -43,7 +53,7 @@ function OverviewCard() {
             className="pointer-events-none"
           >
             <AreaChart
-              data={dummyData}
+              data={stock.data}
               margin={{ top: 0, left: 0, right: 0, bottom: 0 }}
             >
               <defs>
@@ -57,8 +67,8 @@ function OverviewCard() {
                 tick={false}
                 axisLine={false}
                 domain={[
-                  Math.min(...dummyData.map((item) => item.close)),
-                  Math.max(...dummyData.map((item) => item.close)),
+                  Math.min(...stock.data.map((item) => item.close)),
+                  Math.max(...stock.data.map((item) => item.close)),
                 ]}
               />
               <XAxis tick={false} axisLine={false} dataKey="date" />
