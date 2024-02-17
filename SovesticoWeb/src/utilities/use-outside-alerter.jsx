@@ -10,7 +10,7 @@ export function useOutsideAlerter(ref, callback) {
      */
     function handleClickOutside(event) {
       if (ref.current && !ref.current.contains(event.target)) {
-        callback();
+        alert("clicked outside");
       }
     }
     // Bind the event listener
@@ -25,9 +25,9 @@ export function useOutsideAlerter(ref, callback) {
 /**
  * Component that alerts if you click outside of it
  */
-export default function OutsideAlerter({ props, handleClickOutside }) {
+export default function OutsideAlerter(props) {
   const wrapperRef = useRef(null);
-  useOutsideAlerter(wrapperRef, handleClickOutside);
+  useOutsideAlerter(wrapperRef, props.handleClickOutside);
 
   return <div ref={wrapperRef}>{props.children}</div>;
 }

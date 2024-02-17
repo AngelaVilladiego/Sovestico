@@ -18,6 +18,7 @@ function FilterDropdownButton({ principles, onAddPrinciple }) {
   return (
     <OutsideAlerter
       handleClickOutside={() => {
+        console.log("handling");
         if (isExpanded) {
           setIsExpanded(false);
         }
