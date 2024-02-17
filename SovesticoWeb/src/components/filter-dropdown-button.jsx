@@ -10,27 +10,17 @@ function FilterDropdownButton({ principles, onAddPrinciple }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleClickFilter = (principle) => {
-    console.log(principle);
     setIsExpanded(false);
     onAddPrinciple(principle);
   };
 
-  useEffect(() => {
-    console.log("++++ isExpanded changed, ", isExpanded);
-  }, [isExpanded]);
-
-  useEffect(() => {
-    console.log("RELOAD");
-  }, []);
+  useEffect(() => {}, [isExpanded]);
 
   const handleClickOutside = () => {
-    console.log("handling and ", isExpanded);
     setIsExpanded((prev) => {
       if (prev) {
         console.log("setting to false");
         return false;
-      } else {
-        console.log("false alrady");
       }
     });
   };
@@ -41,6 +31,7 @@ function FilterDropdownButton({ principles, onAddPrinciple }) {
         <button
           onClick={() => {
             console.log("clicked");
+            console.log(principles);
             setIsExpanded((prev) => !prev);
           }}
         >
@@ -53,10 +44,10 @@ function FilterDropdownButton({ principles, onAddPrinciple }) {
                 <li
                   key={principle}
                   onClick={() => handleClickFilter(principle)}
-                  className="flex justify-between px-5 py-2 border-b-[1px] border-t-[1px] border-gray-200 group hover:cursor-pointer hover:bg-slate-100"
+                  className="whitespace-nowrap flex justify-between px-5 py-2 border-b-[1px] border-t-[1px] border-gray-200 group hover:cursor-pointer hover:bg-slate-100"
                 >
                   <span>{principle}</span>
-                  <PlusIcon className="w-4" />
+                  <PlusIcon className="w-4 ms-2" />
                 </li>
               ))}
             </ul>
