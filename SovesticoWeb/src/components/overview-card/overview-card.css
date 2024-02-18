@@ -1,0 +1,3 @@
+.overview-card:not(:last-of-type) {
+    @apply border-slate-100 border-b-2
+}

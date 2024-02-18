@@ -1,0 +1,4 @@
+.search-content {
+    width: min(100%, 600px);
+    position: relative;
+}
