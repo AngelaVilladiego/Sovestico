@@ -2,7 +2,7 @@
 # You can run it with the command "python -m flask run"
 # Please create new files as needed to separate your relevant code
 
-from flask import Flask
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
 from dotenv import load_dotenv, find_dotenv
@@ -10,10 +10,9 @@ from bson.objectid import ObjectId
 from pymongo import MongoClient
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
-import json
-import requests
 import csv
 import urllib.parse
+from chat import *
 
 app = Flask(__name__)
 CORS(app)
@@ -63,3 +62,17 @@ def addBaseRecords():
  
     stocks_collection.insert_many(res)
     return ""
+
+@app.route("/queryTico", methods=['POST'])
+def queryTico():
+    data = request.json
+    ticker = data.get("symbol")
+    if len(ticker) == 0:
+        ticker = None
+
+    query = data.get("query")
+
+    response = respondToQuery(ticker, query)
+
+    return jsonify(response)
+
