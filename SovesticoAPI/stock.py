@@ -1,4 +1,25 @@
-def stock_rec(filters: list) -> dict:
+from pymongo import MongoClient
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+from dotenv import load_dotenv, find_dotenv
+from search import generate_response
+import urllib
+import os
+
+load_dotenv()
+mongo_pwd = os.getenv('MONGO_PWD')
+mongo_pwd = urllib.parse.quote_plus(mongo_pwd)
+mongo_user = os.getenv('MONGO_USER')
+mongo_user = urllib.parse.quote_plus(mongo_user)
+uri = 'mongodb+srv://%s:%s@sovestico.lngt1xe.mongodb.net/?retryWrites=true&w=majority' % (mongo_user, mongo_pwd)
+print(uri)
+client = MongoClient(uri)
+
+db = client.sovestico
+
+stocks_collection = db.stocks
+
+def stock_rec(filters : list = []) -> dict:
     """
     Get stock recommendation from Sovestico API
     //request arguments: a list of principles to filter by
@@ -20,13 +41,18 @@ def stock_rec(filters: list) -> dict:
             ]
     }
     """
-    # read from MongoDB
-    # filter by principles
-    # return paginated data
-    for f in filters:
-        if f == ""
+    finder = {"$or": []}
+    sorting = [('esg_score', pymongo.DESCENDING)]
+    for principle in filters:
+        if principle == 'vice_products' or principle == 'catholic_values' or principle == 'military_involvements' or principle == 'ethical_concerns' or principle == 'health_impact':
+            finder['$or'].append({principle: False})
+        else:
+            sorting.append((principle, pymongo.DESCENDING))
+    if len(finder['$or']) == 0:
+        return stocks_collection.find().sort(sorting).limit(10)
+    return dumps(list(stocks_collection.find(finder).sort(sorting).limit(10)))
 
-def get_stock_data(stock_symbol: str) -> dict:
+def get_stock_data(ticker: str, filters: list) -> dict:
     """
     Get stock data from Alpha Vantage API
     request arguments: the symbol of the stock
@@ -39,10 +65,12 @@ def get_stock_data(stock_symbol: str) -> dict:
         summary from our chatbot about why it suggests this,
         in depth data about change and growth,
     """
-    # API Key
+    output = stocks_collection.find_one({"_id": ticker})
+    query = "Explain " + ticker + " in terms of its ESG impact, strength and weaknesses as well as why it is successful regarding"
+    for fil in filters:
+        query += " " + fil
+    response = generate_response(query)
 
-def get_stock_news(stock_symbol: str) -> dict:
-    """
-    Get stock news from News API
-    """
-    
+    output['response'] = response[0]
+    output['citation'] = response[1]
+    return output
