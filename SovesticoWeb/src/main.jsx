@@ -15,6 +15,7 @@ import ChatLayout from "./routes/chat-layout";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Root />}>
+      <Route index element={<Landing />} />
       <Route path="stocks/" element={<ChatLayout />}>
         <Route index element={<SearchResults />} />
       </Route>
