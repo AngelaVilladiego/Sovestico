@@ -17,6 +17,10 @@ function SearchResults() {
   });
 
   useEffect(() => {
+    console.log("FROM VIEW", resultsState);
+  }, [resultsState]);
+
+  useEffect(() => {
     fetchRecommendations();
   }, [filterState]);
 
@@ -41,7 +45,7 @@ function SearchResults() {
       setResultsState({
         ...resultsState,
         loading: false,
-        results: data,
+        stocks: data,
       });
     });
   };
@@ -119,7 +123,32 @@ function SearchResults() {
               </div>
             </div>
           ) : (
-            results.stocks.map((stock) => <p>{stock.symbol}</p>)
+            resultsState.stocks.map((stock) => (
+              <OverviewCard
+                key={stock.symbol}
+                stock={{
+                  name: stock.shortName,
+                  symbol: stock.symbol,
+                  strongestPrinciple: stock.strongest_principle,
+                  weakestPrinciple: stock.weakest_principle,
+                  price: JSON.parse(stock.price_history).Close[
+                    Object.keys(JSON.parse(stock.price_history)).length - 1
+                  ],
+                  change:
+                    ((JSON.parse(stock.price_history).Close[
+                      Object.keys(JSON.parse(stock.price_history)).length - 1
+                    ] -
+                      JSON.parse(stock.price_history).Close[
+                        Object.keys(JSON.parse(stock.price_history)).length - 2
+                      ]) /
+                      JSON.parse(stock.price_history).Close[
+                        Object.keys(JSON.parse(stock.price_history)).length - 2
+                      ]) *
+                    100,
+                  data: JSON.parse(stock.price_history),
+                }}
+              />
+            ))
           )}
         </div>
       </div>

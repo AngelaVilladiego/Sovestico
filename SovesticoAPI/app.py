@@ -16,6 +16,9 @@ from chat import *
 from stock import *
 from bson.json_util import dumps
 from codecs import encode
+import json
+
+import re
 
 
 app = Flask(__name__)
@@ -82,5 +85,30 @@ def getRecommendations():
     data = request.json
     filters = data.get('filters')
     res = stock_rec(filters)
+    res = json.loads(res)
+
+    for i, r in enumerate(res):
+        
+        print("\n")
+        price_history = r["price_history"]
+
+        s = r["price_history"]
+        s2 = s.replace("'", "")
+        s3 = re.sub('(\w+)', '"\g<1>"', s2)
+        regex = r'"\."'
+        s4 = re.sub(regex, ".", s3, 0, re.MULTILINE)
+
+        
+        price_history = json.loads(s4)
+
+        for k, v in price_history["Close"].items():
+            price_history[k] = float(v)
+
+        print(price_history)
+
+        res[i]["price_history"] = price_history
+
+    print(res)
+
     return res
 
