@@ -9,6 +9,7 @@ import {
   AreaChart,
   Area,
 } from "recharts";
+import { useContext } from "react";
 
 import "./overview-card.css";
 import { useNavigate } from "react-router";
@@ -16,7 +17,10 @@ import { useNavigate } from "react-router";
 function OverviewCard({ stock }) {
   const navigate = useNavigate();
 
+  const { queryContext, setQueryContext } = useContext(QueryContext);
+
   const handleClick = () => {
+    setQueryContext(stock.symbol);
     navigate("/stocks/details", { state: stock });
   };
 

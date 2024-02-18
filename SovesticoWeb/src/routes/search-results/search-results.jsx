@@ -3,7 +3,7 @@ import "./search-results.css";
 import { getData, getData2 } from "../../utilities/random-stock-month";
 import FilterBar from "../../components/filter-bar";
 import { PRINCIPLES } from "../../../globals";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { GetRecommendations } from "../../services/endpoints";
 import { filterToKey, keyToFilter } from "../../services/filter-to-key";
