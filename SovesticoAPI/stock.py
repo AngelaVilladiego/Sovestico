@@ -52,7 +52,7 @@ def stock_rec(filters : list = []) -> dict:
         else:
             sorting.append((principle, pymongo.DESCENDING))
     if len(finder['$or']) == 0:
-        return stocks_collection.find().sort(sorting).limit(10)
+        return dumps(list(stocks_collection.find().sort(sorting).limit(10)))
     return dumps(list(stocks_collection.find(finder).sort(sorting).limit(10)))
 
 def get_stock_data(ticker: str, filters: list) -> dict:

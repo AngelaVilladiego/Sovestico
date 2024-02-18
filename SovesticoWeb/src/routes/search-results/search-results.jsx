@@ -29,7 +29,12 @@ function SearchResults() {
     let keys = [];
 
     filterState.filters.forEach((filter) => {
-      keys.push(filterToKey(filter));
+      if (filter.selected) {
+        console.log("FILTER:", filter);
+        let key = filterToKey(filter.name);
+        console.log("KEY", key);
+        keys.push(key);
+      }
     });
 
     GetRecommendations(keys).then((data) => {

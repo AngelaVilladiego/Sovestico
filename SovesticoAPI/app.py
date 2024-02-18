@@ -14,6 +14,9 @@ import csv
 import urllib.parse
 from chat import *
 from stock import *
+from bson.json_util import dumps
+from codecs import encode
+
 
 app = Flask(__name__)
 CORS(app)
