@@ -69,7 +69,7 @@ def addBaseRecords():
 def queryTico():
     data = request.json
     ticker = data.get("symbol")
-    if len(ticker) == 0:
+    if not ticker:
         ticker = None
 
     query = data.get("query")

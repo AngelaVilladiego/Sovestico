@@ -1,5 +1,5 @@
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import ChatMessage from "../chat-message/chat-message";
 import "./chat.css";
 import { QueryTico } from "../../services/endpoints";
@@ -15,23 +15,38 @@ function Chat({ className }) {
     if (chatBox.current && chatBox.current.value) {
       const msg = chatBox.current.value;
       chatBox.current.value = "";
+
       setMsgState({
         ...msgState,
-        messages: [...msgState.messages].unshift({
-          type: "sent",
-          content: msg,
-        }),
-      });
-      QueryTico(queryContext, chatBox.current.value).then((response) => {
-        setMsgState({
-          ...msgState,
-          messages: [...msgState.messages].unshift({
-            type: "received",
-            content: response,
-          }),
-        });
+        messages: [{ type: "sent", content: msg }, ...msgState.messages],
       });
     }
+  };
+
+  useEffect(() => {
+    console.log(msgState);
+    if (
+      msgState.messages.length > 0 &&
+      msgState.messages[0].type == "sent" &&
+      !msgState.loading
+    ) {
+      queryApi(msgState.messages[0].content);
+    }
+  }, [msgState]);
+
+  const queryApi = (query) => {
+    setMsgState({
+      ...msgState,
+      loading: true,
+    });
+
+    QueryTico(queryContext, query).then((data) => {
+      setMsgState({
+        ...msgState,
+        loading: false,
+        messages: [{ type: "received", content: data }, ...msgState.messages],
+      });
+    });
   };
 
   return (
@@ -39,9 +54,9 @@ function Chat({ className }) {
       <div className="h-full w-full relative">
         <div className="absolute top-0 left-0 right-0 bottom-0">
           <div className="scrollable-messages px-8  flex flex-col-reverse pt-6 gap-8 h-full overflow-y-auto">
-            {msgState.messages.map((msg, i) => {
-              <ChatMessage key={i} type={msg.type} content={msg.content} />;
-            })}
+            {msgState.messages.map((msg, i) => (
+              <ChatMessage key={i} type={msg.type} content={msg.content} />
+            ))}
             {msgState.loading ? <Typing /> : null}
           </div>
         </div>
