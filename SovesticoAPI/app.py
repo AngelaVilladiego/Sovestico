@@ -8,6 +8,8 @@ import os
 from dotenv import load_dotenv, find_dotenv
 from bson.objectid import ObjectId
 from pymongo import MongoClient
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
 import json
 import requests
 import csv
@@ -16,13 +18,21 @@ import urllib.parse
 app = Flask(__name__)
 CORS(app)
 
-load_dotenv(find_dotenv())
+load_dotenv()
 mongo_pwd = os.getenv('MONGO_PWD')
-mongo_pwd = urllib.parse.quote_plus('{mongo_pwd}')
+mongo_pwd = urllib.parse.quote_plus(mongo_pwd)
 mongo_user = os.getenv('MONGO_USER')
-mongo_user = urllib.parse.quote_plus('{mongo_user}')
+mongo_user = urllib.parse.quote_plus(mongo_user)
+uri = 'mongodb+srv://%s:%s@sovestico.lngt1xe.mongodb.net/?retryWrites=true&w=majority' % (mongo_user, mongo_pwd)
+print(uri)
+client = MongoClient(uri)
 
-client = MongoClient('mongodb+srv://%s:%s@sovestico.lngt1xe.mongodb.net/?retryWrites=true&w=majority' % (mongo_user, mongo_pwd))
+try:
+    client.admin.command('ping')
+    print("Pinged your deployment. You successfully connected to MongoDB!")
+except Exception as e:
+    print(e)
+
 db = client.sovestico
 
 stocks_collection = db.stocks
