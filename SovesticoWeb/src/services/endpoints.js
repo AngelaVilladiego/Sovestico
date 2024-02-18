@@ -16,7 +16,7 @@ export const QueryTico = async (symbol, query) => {
     .then((r) => r.json())
     .then((r) => {
       console.log("Response", r);
-      return r;
+      return r.output;
     })
     .catch((error) => console.error("Error:", error));
 

@@ -53,7 +53,7 @@ function Chat({ className }) {
     <div className={`${className} flex flex-col`}>
       <div className="h-full w-full relative">
         <div className="absolute top-0 left-0 right-0 bottom-0">
-          <div className="scrollable-messages px-8  flex flex-col-reverse pt-6 gap-8 h-full overflow-y-auto">
+          <div className="scrollable-messages overflow-x-hidden px-8  flex flex-col-reverse pt-6 gap-8 h-full overflow-y-auto">
             {msgState.messages.map((msg, i) => (
               <ChatMessage key={i} type={msg.type} content={msg.content} />
             ))}

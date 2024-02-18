@@ -6,6 +6,7 @@ from langchain_openai import ChatOpenAI
 from search import generate_response
 import alpaca_trade_api as tradeapi
 import os
+from langchain_community.tools.tavily_search import TavilySearchResults
 
 from dotenv import load_dotenv
 load_dotenv()
