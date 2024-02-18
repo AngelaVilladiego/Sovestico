@@ -1,14 +1,36 @@
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
-import { useRef } from "react";
+import { useContext, useRef, useState } from "react";
 import ChatMessage from "../chat-message/chat-message";
 import "./chat.css";
+import { QueryTico } from "../../services/endpoints";
+import { QueryContext } from "../../utilities/query-context";
+import { Typing } from "../typing-indicator/typing-indicator";
 
 function Chat({ className }) {
   const chatBox = useRef(null);
+  const [msgState, setMsgState] = useState({ loading: false, messages: [] });
+  const { queryContext, setQueryContext } = useContext(QueryContext);
 
   const onSendMessage = () => {
-    if (chatBox.current) {
-      console.log(chatBox.current.value);
+    if (chatBox.current && chatBox.current.value) {
+      const msg = chatBox.current.value;
+      chatBox.current.value = "";
+      setMsgState({
+        ...msgState,
+        messages: [...msgState.messages].unshift({
+          type: "sent",
+          content: msg,
+        }),
+      });
+      QueryTico(queryContext, chatBox.current.value).then((response) => {
+        setMsgState({
+          ...msgState,
+          messages: [...msgState.messages].unshift({
+            type: "received",
+            content: response,
+          }),
+        });
+      });
     }
   };
 
@@ -17,10 +39,10 @@ function Chat({ className }) {
       <div className="h-full w-full relative">
         <div className="absolute top-0 left-0 right-0 bottom-0">
           <div className="scrollable-messages px-8  flex flex-col-reverse pt-6 gap-8 h-full overflow-y-auto">
-            <ChatMessage type="received" content="Sit amet fit quertur." />
-            <ChatMessage type="received" />
-            <ChatMessage type="sent" content="Lorem ipsum dolor sit amet?" />
-            <ChatMessage type="received" content="Sit amet fit quertur." />
+            {msgState.messages.map((msg, i) => {
+              <ChatMessage key={i} type={msg.type} content={msg.content} />;
+            })}
+            {msgState.loading ? <Typing /> : null}
           </div>
         </div>
       </div>
