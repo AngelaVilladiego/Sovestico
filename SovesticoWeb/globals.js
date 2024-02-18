@@ -16,4 +16,5 @@ export const PRINCIPLES = [
 export const GLOBALS = {
   BASE_URL: BASE_URL,
   QUERY_TICO: "queryTico",
+  GET_RECOMMENDATIONS: "getRecommendations",
 };
