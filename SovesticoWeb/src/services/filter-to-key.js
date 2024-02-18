@@ -18,3 +18,14 @@ export const filterToKey = (filter) => {
       return "catholic_values";
   }
 };
+
+export const keyToFilter = (filter) => {
+  switch (filter) {
+    case "governanceScore":
+      return "Governance";
+    case "environmentScore":
+      return "Environmentalism";
+    case "socialScore":
+      return "Social impact";
+  }
+};

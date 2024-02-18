@@ -66,14 +66,11 @@ function OverviewCard({ stock, onClick }) {
                 width={0}
                 tick={false}
                 axisLine={false}
-                domain={[
-                  Math.min(...stock.data.map((item) => item.close)),
-                  Math.max(...stock.data.map((item) => item.close)),
-                ]}
+                domain={[Math.min(stock.data), Math.max(stock.data)]}
               />
-              <XAxis tick={false} axisLine={false} dataKey="date" />
+              <XAxis tick={false} axisLine={false} dataKey="index" />
               <Area
-                dataKey="close"
+                dataKey="value"
                 dot={false}
                 stroke="#5a8a6c"
                 strokeWidth="2px"

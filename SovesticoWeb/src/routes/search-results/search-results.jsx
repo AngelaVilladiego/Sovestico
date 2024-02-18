@@ -6,7 +6,7 @@ import { PRINCIPLES } from "../../../globals";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { GetRecommendations } from "../../services/endpoints";
-import { filterToKey } from "../../services/filter-to-key";
+import { filterToKey, keyToFilter } from "../../services/filter-to-key";
 
 function SearchResults() {
   const passedState = useLocation();
@@ -127,25 +127,29 @@ function SearchResults() {
               <OverviewCard
                 key={stock.symbol}
                 stock={{
+                  esg: stock.esg_score,
                   name: stock.shortName,
                   symbol: stock.symbol,
-                  strongestPrinciple: stock.strongest_principle,
-                  weakestPrinciple: stock.weakest_principle,
-                  price: JSON.parse(stock.price_history).Close[
-                    Object.keys(JSON.parse(stock.price_history)).length - 1
-                  ],
-                  change:
-                    ((JSON.parse(stock.price_history).Close[
-                      Object.keys(JSON.parse(stock.price_history)).length - 1
-                    ] -
-                      JSON.parse(stock.price_history).Close[
-                        Object.keys(JSON.parse(stock.price_history)).length - 2
-                      ]) /
-                      JSON.parse(stock.price_history).Close[
-                        Object.keys(JSON.parse(stock.price_history)).length - 2
-                      ]) *
-                    100,
-                  data: JSON.parse(stock.price_history),
+                  strongestPrinciple: keyToFilter(stock.strongest_principle),
+                  weakestPrinciple: keyToFilter(stock.weakest_principle),
+                  price: (
+                    Math.round(
+                      stock.price_history[stock.price_history.length - 1] * 100
+                    ) / 100
+                  ).toFixed(2),
+                  change: (
+                    Math.round(
+                      ((stock.price_history[stock.price_history.length - 1] -
+                        stock.price_history[stock.price_history.length - 2]) /
+                        stock.price_history[stock.price_history.length - 2]) *
+                        100 *
+                        100
+                    ) / 100
+                  ).toFixed(2),
+                  data: stock.price_history.map((value, index) => ({
+                    index,
+                    value,
+                  })),
                 }}
               />
             ))

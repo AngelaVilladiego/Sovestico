@@ -100,13 +100,14 @@ def getRecommendations():
 
         
         price_history = json.loads(s4)
+        newHistory = []
 
         for k, v in price_history["Close"].items():
-            price_history[k] = float(v)
+            newHistory.append(float(v))
 
-        print(price_history)
+        print(newHistory)
 
-        res[i]["price_history"] = price_history
+        res[i]["price_history"] = newHistory
 
     print(res)
 
