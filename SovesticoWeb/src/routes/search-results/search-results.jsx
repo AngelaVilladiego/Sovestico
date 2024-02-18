@@ -127,6 +127,12 @@ function SearchResults() {
               <OverviewCard
                 key={stock.symbol}
                 stock={{
+                  environmentScore: stock.env_score,
+                  socialScore: stock.soc_score,
+                  governanceScore: stock.gov_score,
+                  beta: stock.beta,
+                  risk: stock.overallRisk,
+                  about: stock.longBusinessSummary,
                   esg: stock.esg_score,
                   name: stock.shortName,
                   symbol: stock.symbol,

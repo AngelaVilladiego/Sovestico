@@ -11,11 +11,18 @@ import {
 } from "recharts";
 
 import "./overview-card.css";
+import { useNavigate } from "react-router";
 
-function OverviewCard({ stock, onClick }) {
+function OverviewCard({ stock }) {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/stocks/details", { state: stock });
+  };
+
   return (
     <div
-      onClick={onClick}
+      onClick={handleClick}
       className="overview-card rounded-md py-8 px-8 hover:cursor-pointer w-full hover:bg-slate-50"
     >
       <p className="text-2xl font-semibold pb-4">

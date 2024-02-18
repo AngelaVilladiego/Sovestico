@@ -11,6 +11,7 @@ import Root from "./routes/root";
 import Landing from "./routes/landing";
 import SearchResults from "./routes/search-results/search-results";
 import ChatLayout from "./routes/chat-layout";
+import StockDetails from "./routes/stock-details";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,6 +19,7 @@ const router = createBrowserRouter(
       <Route index element={<Landing />} />
       <Route path="stocks/" element={<ChatLayout />}>
         <Route index element={<SearchResults />} />
+        <Route path="details/" element={<StockDetails />} />
       </Route>
     </Route>
   )
