@@ -13,7 +13,7 @@ function Navbar() {
         </a>
       </div>
       <div className="w-6/12 relative text-gray-600">
-        <div className="bg-white h-10 px-5 pr-16 rounded-full text-sm focus:outline-none">
+        <div className="bg-white h-10 px-5 pr-16 rounded-full text-sm focus:outline-none border-2 border-slate-100">
           <input
             className="w-full h-full focus:outline-none font-body"
             type="search"

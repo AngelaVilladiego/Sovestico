@@ -2,6 +2,11 @@
    
 }
 
-.chat-bubble-container{
-    height: calc(100% - (5rem))
+
+.scrollable-messages{
+    scrollbar-width: thin;
+}
+
+.thin-scrollbar{
+    scrollbar-width: thin;
 }
