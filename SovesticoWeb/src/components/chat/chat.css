@@ -1,0 +1,7 @@
+.send-message-container {
+   
+}
+
+.chat-bubble-container{
+    height: calc(100% - (5rem))
+}
