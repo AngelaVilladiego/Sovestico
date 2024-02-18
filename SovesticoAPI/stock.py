@@ -1,10 +1,13 @@
 from pymongo import MongoClient
+import pymongo
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from dotenv import load_dotenv, find_dotenv
 from search import generate_response
 import urllib
 import os
+from bson.json_util import dumps
+
 
 load_dotenv()
 mongo_pwd = os.getenv('MONGO_PWD')

@@ -13,6 +13,7 @@ from pymongo.server_api import ServerApi
 import csv
 import urllib.parse
 from chat import *
+from stock import *
 
 app = Flask(__name__)
 CORS(app)
@@ -26,11 +27,6 @@ uri = 'mongodb+srv://%s:%s@sovestico.lngt1xe.mongodb.net/?retryWrites=true&w=maj
 print(uri)
 client = MongoClient(uri)
 
-try:
-    client.admin.command('ping')
-    print("Pinged your deployment. You successfully connected to MongoDB!")
-except Exception as e:
-    print(e)
 
 db = client.sovestico
 
@@ -77,4 +73,11 @@ def queryTico():
     response = respondToQuery(ticker, query)
 
     return jsonify(response)
+
+@app.route("/getRecommendations", methods=['POST'])
+def getRecommendations():
+    data = request.json
+    filters = data.get('filters')
+    res = stock_rec(filters)
+    return res
 
